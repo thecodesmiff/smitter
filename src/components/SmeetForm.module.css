@@ -1,25 +1,37 @@
 * {
     padding: 0;
     margin: 0;
-    /* background-color: #000000; */
     color: #000;
 }
 
 .container {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
     justify-content: center;
     align-items: flex-start;
+    background-color: rgba(0,0,0, 0.5);
 }
 
 .smeetform_container {
-    width: 500px;
+    width: 520px;
     /* border: 1px solid green; */
     margin-top: 75px;
     display: flex;
     flex-direction: column;
-    padding: 0;
+    justify-content: center;
+    padding: 10px;
+    background-color: black;
+    border-radius: 15px;
+}
+
+.smeetform_container > span {
+    align-self: flex-start;
+    padding-left: 10px;
+    color: #fff;
 }
 
 .smeetform_top, .smeetform_bottom {
@@ -27,33 +39,71 @@
 }
 
 .smeetform_top {
-    /* background-color: gray; */
+    padding-top: 4px;
 }
 
 textarea {
     resize: none;
     border: none;
+    background-color: #000;
+    color: white;
 }
 
 textarea:focus {
-    border: none;
+    outline: none;
+
 }
 
 .smeetform_bottom {
-    background-color: orangered;
+    background-color: #000;
     display: flex;
-
+    border-top: 1px solid #333;
+    padding-top: 7px;
 }
 
-
 .smeetform_options {
-    background-color: grey;
-    width: 75%;
+    background-color: transparent;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    /* background-color: blue; */
+}
+
+.options_container {
+    display: flex;
+    justify-content: center;
+    border: 10px solid white;
+}
+
+.options_left {
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.options_right {
+    /* background-color: green; */
+    padding-right: 15px;
 }
 
 .smeetform_submit {
-    background-color: pink;
+    /* background-color: yellow; */
     width: 25%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-left: 2px solid #333;
+}
+
+.smeetform_submit .button {
+    background-color: #4A99E9;
+    width: 45px;
+    border: none;
+    border-radius: 20px;
+    padding: 7px;
+    color: #fff;
 }
 
 .text {
@@ -65,8 +115,8 @@ textarea:focus {
     display: flex;
 }
 
-.options {
-    width: 50%;
-    height: 100px;
-    background-color: white;
+
+.homeIcon {
+    stroke: #1D99EC;
+    font-size: 1.4em;
 }
