@@ -2,6 +2,7 @@ import styles from './CharCount.module.css';
 
 export default function CharCount({ smeetText, maxLength }) {
 
+
     let progressValue = (smeetText.length/maxLength) * 100;
     let charsLeft = maxLength - smeetText.length;
     let countColor = '';
