@@ -11,8 +11,9 @@
     position: absolute;
     left: 0;
     top: 0;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     background-color: rgba(140, 171, 201, 0.25);
 }
 
@@ -119,4 +120,8 @@ textarea:focus {
 .homeIcon {
     stroke: #1D99EC;
     font-size: 1.2em;
+}
+
+.emojiStuff {
+    align-self: center;
 }

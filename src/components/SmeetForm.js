@@ -3,17 +3,30 @@ import styles from './SmeetForm.module.css';
 // import { GoHome, GoImage } from 'react-icons/go';
 import { HiOutlineGif,
          HiOutlinePhoto,
-         HiOutlineHome,
          HiOutlineListBullet,
          HiOutlineFaceSmile,
 } from 'react-icons/hi2';
 import CharCount from './CharCount';
+import EmojiPicker from '@emoji-mart/react';
+import data from '@emoji-mart/data';
 
 
 export default function SmeetForm({ setShowModal }) {
 
     const [smeetText, setSmeetText] = useState("");
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
+    const addEmoji = (e) => {
+        const symbol = e.unified.split("_");
+        const codeArray = [];
+        symbol.forEach((emoji) => codeArray.push("0x" + emoji));
+        let emoji = String.fromCodePoint(...codeArray);
+        setSmeetText(smeetText + emoji);
+    }
+
+    const toggleShowEmoji =  () => {
+        !showEmojiPicker ? setShowEmojiPicker(true) : setShowEmojiPicker(false);
+    }
 
     return (
         <>
@@ -29,7 +42,9 @@ export default function SmeetForm({ setShowModal }) {
                                 rows="7"
                                 placeholder='What is happening?!'
                                 maxLength='240'  
-                                onChange={(e)=> {setSmeetText(e.target.value)}}  
+                                onChange={(e)=> {setSmeetText(e.target.value)}} 
+                                onClick={() => {setShowEmojiPicker(false)}} 
+                                value={smeetText}
                             >
                             </textarea>
                         </form>
@@ -40,7 +55,7 @@ export default function SmeetForm({ setShowModal }) {
                                 <HiOutlinePhoto className={styles.homeIcon} />
                                 <HiOutlineGif className={styles.homeIcon} />
                                 <HiOutlineListBullet className={styles.homeIcon} />
-                                <HiOutlineFaceSmile className={styles.homeIcon} />
+                                <HiOutlineFaceSmile className={styles.homeIcon} onClick={(toggleShowEmoji)} />
                             </div>
                             <div className={styles.options_right}>
                                 {smeetText && <CharCount smeetText={smeetText} maxLength={240} />}
@@ -51,6 +66,13 @@ export default function SmeetForm({ setShowModal }) {
                         </div>
                     </div>
                 </div>
+                { showEmojiPicker && 
+                <div className={styles.emojiStuff}>
+                    <EmojiPicker 
+                        data={data}
+                        onEmojiSelect={addEmoji}
+                    />
+                </div> }
             </div>
         </>
     )

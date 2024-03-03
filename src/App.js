@@ -1,6 +1,5 @@
 
 import './App.css';
-import SmeetForm from './components/SmeetForm';
 import Main from './views/Main';
 
 function App() {
