@@ -38,7 +38,7 @@ export default function SmeetForm({ setShowModal }) {
                             <textarea 
                                 name="smeetContent" 
                                 id="smeetcontent" 
-                                cols="42" 
+                                cols="38" 
                                 rows="7"
                                 placeholder='What is happening?!'
                                 maxLength='240'  

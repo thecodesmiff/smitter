@@ -18,7 +18,7 @@
 }
 
 .smeetform_container {
-    width: 430px;
+    width: 445px;
     /* border: 1px solid green; */
     margin-top: 75px;
     display: flex;
@@ -48,6 +48,7 @@ textarea {
     border: none;
     background-color: #000;
     color: white;
+    font-size: 16px;
 }
 
 textarea:focus {
