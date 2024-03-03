@@ -13,11 +13,11 @@
     top: 0;
     justify-content: center;
     align-items: flex-start;
-    background-color: rgba(0,0,0, 0.5);
+    background-color: rgba(140, 171, 201, 0.25);
 }
 
 .smeetform_container {
-    width: 520px;
+    width: 430px;
     /* border: 1px solid green; */
     margin-top: 75px;
     display: flex;
@@ -118,5 +118,5 @@ textarea:focus {
 
 .homeIcon {
     stroke: #1D99EC;
-    font-size: 1.4em;
+    font-size: 1.2em;
 }
