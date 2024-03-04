@@ -50,7 +50,7 @@ export default function Main() {
                     </div>
                 </div>
                 <div className={styles.mainFeed}>
-                    
+
                 </div>
                 <div className={styles.trendSection}>
 

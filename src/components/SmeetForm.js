@@ -2,19 +2,20 @@ import { useState } from 'react';
 import styles from './SmeetForm.module.css';
 // import { GoHome, GoImage } from 'react-icons/go';
 import { HiOutlineGif,
-         HiOutlinePhoto,
          HiOutlineListBullet,
          HiOutlineFaceSmile,
 } from 'react-icons/hi2';
 import CharCount from './CharCount';
 import EmojiPicker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
+import GifPicker from './GifPicker';
 
 
 export default function SmeetForm({ setShowModal }) {
 
     const [smeetText, setSmeetText] = useState("");
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [showGifPicker, setShowGifPicker] = useState(false);
 
     const addEmoji = (e) => {
         const symbol = e.unified.split("_");
@@ -24,9 +25,19 @@ export default function SmeetForm({ setShowModal }) {
         setSmeetText(smeetText + emoji);
     }
 
+
     const toggleShowEmoji =  () => {
+        showGifPicker ? setShowGifPicker(false) : setShowGifPicker(false);
         !showEmojiPicker ? setShowEmojiPicker(true) : setShowEmojiPicker(false);
     }
+
+    const toggleShowGif =  () => {
+        showEmojiPicker ? setShowEmojiPicker(false) : setShowEmojiPicker(false);
+        !showGifPicker ? setShowGifPicker(true) : setShowGifPicker(false);
+    }
+
+
+
 
     return (
         <>
@@ -47,13 +58,18 @@ export default function SmeetForm({ setShowModal }) {
                                 value={smeetText}
                             >
                             </textarea>
+                            <input 
+                                type="file"
+                                id="file"
+                                className={styles.file}
+                                accept=".jpg, .png"
+                            />
                         </form>
                     </div>
                     <div className={styles.smeetform_bottom}>
                         <div className={styles.smeetform_options}>
                             <div className={styles.options_left}>
-                                <HiOutlinePhoto className={styles.homeIcon} />
-                                <HiOutlineGif className={styles.homeIcon} />
+                                <HiOutlineGif className={styles.homeIcon} onClick={(toggleShowGif)} />
                                 <HiOutlineListBullet className={styles.homeIcon} />
                                 <HiOutlineFaceSmile className={styles.homeIcon} onClick={(toggleShowEmoji)} />
                             </div>
@@ -69,6 +85,13 @@ export default function SmeetForm({ setShowModal }) {
                 { showEmojiPicker && 
                 <div className={styles.emojiStuff}>
                     <EmojiPicker 
+                        data={data}
+                        onEmojiSelect={addEmoji}
+                    />
+                </div> }
+                { showGifPicker && 
+                <div className={styles.emojiStuff}>
+                    <GifPicker 
                         data={data}
                         onEmojiSelect={addEmoji}
                     />
