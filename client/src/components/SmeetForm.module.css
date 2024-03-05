@@ -1,0 +1,131 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: rgba(140, 171, 201, 0.25);
+}
+
+.smeetform_container {
+    width: 445px;
+    /* border: 1px solid green; */
+    margin-top: 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    background-color: black;
+    border-radius: 15px;
+}
+
+.smeetform_container > span {
+    align-self: flex-start;
+    padding-left: 10px;
+    color: #fff;
+}
+
+.smeetform_top, .smeetform_bottom {
+    width: 100%;
+}
+
+.smeetform_top {
+    padding-top: 4px;
+}
+
+textarea {
+    resize: none;
+    border: none;
+    background-color: #000;
+    color: white;
+    font-size: 16px;
+}
+
+textarea:focus {
+    outline: none;
+
+}
+
+.smeetform_bottom {
+    background-color: #000;
+    display: flex;
+    border-top: 1px solid #333;
+    padding-top: 7px;
+}
+
+.smeetform_options {
+    background-color: transparent;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    /* background-color: blue; */
+}
+
+.options_container {
+    display: flex;
+    justify-content: center;
+    border: 10px solid white;
+}
+
+.options_left {
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.options_right {
+    /* background-color: green; */
+    padding-right: 15px;
+}
+
+.smeetform_submit {
+    /* background-color: yellow; */
+    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-left: 2px solid #333;
+}
+
+.smeetform_submit .button {
+    background-color: #4A99E9;
+    width: 45px;
+    border: none;
+    border-radius: 20px;
+    padding: 7px;
+    color: #fff;
+}
+
+.text {
+    border: none;
+    resize: none;
+}
+
+.bottom_container {
+    display: flex;
+}
+
+
+.homeIcon {
+    stroke: #1D99EC;
+    font-size: 1.2em;
+}
+
+.emojiStuff {
+    align-self: center;
+}
+
+.file {
+    display: none;
+}
