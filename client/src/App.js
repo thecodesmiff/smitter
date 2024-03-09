@@ -1,4 +1,3 @@
-
 import './App.css';
 import Auth from './components/Auth';
 import Main from './views/Main';
@@ -6,14 +5,16 @@ import { useCookies } from 'react-cookie';
 
 
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(null);
-  const userEmail = cookies.Email;
-  const authToken = cookies.AuthToken;
+  const [cookie, setCookie, removeCookie] = useCookies(null);
+  const userEmail = cookie.Email;
+  const authToken = cookie.AuthToken;
+  const userName = cookie.UserName;
+ 
 
   return (
     <div className="App">
       {!authToken && <Auth />}
-      {authToken && <Main />}
+      {authToken && <Main  />}
     </div>
   );
 }

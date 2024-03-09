@@ -1,0 +1,10 @@
+.coverContainer {
+    width: 500px;
+    height: 200px;
+    background-color: gray;
+}
+
+.coverContainer img {
+    width: 100%;
+    height: 100%;
+}

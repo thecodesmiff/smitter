@@ -1,7 +1,126 @@
-/* .container {
-    width: 100%;
+.container, .profileDetailsContainer {
     display: flex;
     flex-direction: column;
+}
+
+.profileHeader {
+    display: flex;
     align-items: center;
-    background-color: #fff;
-} */
+    padding: 5px;
+}
+
+.headerLeft {
+    padding: 0 20px 0 8px;
+    font-size: 1em;
+}
+
+.headerRight {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.headerRight p {
+    font-size: 0.7em;
+    color: #999;
+    
+}
+
+.moreButton, .envelope, .notification, .followButton {
+    border: 1px solid #999;
+    border-radius: 13px;
+    padding: 4px;
+}
+
+.followButton {
+    font-size: 0.7em;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.profileMenu {
+    width: 50%;
+    align-self: flex-end;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-top: -15px;
+}
+
+.headerImg {
+    height: 170px;
+    width: 100%;
+    position: relative;
+}
+
+.profileImg {
+    border: 3px solid black;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    position: relative;
+    margin-bottom: -80px;
+    top: -50px;
+    left: 15px;
+    overflow: hidden;
+}
+
+.profileDetailsContainer {
+    padding: 0 15px;
+}
+
+.displayName {
+    margin-top: 30px;
+}
+
+.displayName p {
+    color: #999;
+    font-size: .8em;
+}
+
+.profileDetails {
+    margin: 15px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.bio {
+    margin-bottom: 10px;
+    font-size: 0.8em;
+}
+
+.info {
+    width: 310px;
+    font-size: 0.8em;
+    display: flex;
+    justify-content: space-between;    
+}
+
+.info p {
+    margin-left: 3px;
+}
+
+.info, .stats {
+    color: #999;
+}
+
+.location, .birthday, .joinDate, .stats {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.stats {
+    width: 185px;
+    font-size: 0.8em;
+    align-content: flex-start;
+    justify-content: space-between;
+}
+
+.stats span {
+    color: #fff;
+    font-weight: bolder;
+}
+
+

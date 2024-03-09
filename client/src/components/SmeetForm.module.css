@@ -103,7 +103,7 @@ textarea:focus {
     width: 45px;
     border: none;
     border-radius: 20px;
-    padding: 7px;
+    padding: 7px 5px;
     color: #fff;
 }
 

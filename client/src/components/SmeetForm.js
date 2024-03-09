@@ -45,7 +45,7 @@ export default function SmeetForm({ setShowModal }) {
                 <div className={styles.smeetform_container}>
                     <span onClick={() => setShowModal(false)}>X</span>
                     <div className={styles.smeetform_top}>
-                        <form id="smeet">
+                        <form id="smeet" action="">
                             <textarea 
                                 name="smeetContent" 
                                 id="smeetcontent" 
@@ -78,7 +78,7 @@ export default function SmeetForm({ setShowModal }) {
                             </div>
                         </div>
                         <div className={styles.smeetform_submit}>
-                            <div className={styles.button}>Post</div>
+                            <button form="smeet" className={styles.button} type="submit">Post</button>
                         </div>
                     </div>
                 </div>

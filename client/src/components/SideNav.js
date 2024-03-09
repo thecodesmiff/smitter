@@ -5,8 +5,21 @@ import { HiOutlineMagnifyingGlass,
     HiOutlineUser
 } from "react-icons/hi2";
 import SmeetForm from "./SmeetForm";
+import { useCookies } from "react-cookie";
 
-export default function SideNav({ setShowModal, signOut }) {
+export default function SideNav({ setShowModal }) {
+
+    const [cookie, setCookie, removeCookie] = useCookies(null);
+
+    const signOut = () => {
+        console.log('signout');
+        removeCookie('Email');
+        removeCookie('AuthToken');
+        removeCookie('UserName');
+
+        window.location.reload();
+    }
+
     return (
         // <div className="navSection">
         <>

@@ -1,40 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SmeetForm from "../components/SmeetForm";
-// import styles from './Main.module.css';
-// import { HiOutlineMagnifyingGlass,
-//          HiOutlineHome,
-//          HiOutlineBell,
-//          HiOutlineEnvelope,
-//          HiOutlineUser
-// } from "react-icons/hi2";
 import { useCookies } from "react-cookie";
-import ProfileHeader from "../components/ProfileHeader";
 import SideNav from "../components/SideNav";
+import Post from "../components/Post";
+import ProfileHeader from "../components/ProfileHeader";
 import Profile from "./Profile";
+
 
 export default function Main() {
 
     const [showModal, setShowModal] = useState(false);
     const [cookie, setCookie, removeCookie] = useCookies(null);
+    const userName = cookie.UserName;
+    const authToken = cookie.AuthToken
+    const [smeets, setSmeets] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [userInfo, setUserInfo] = useState([]);
 
-    const signOut = () => {
-        console.log('signout');
-        removeCookie('Email');
-        removeCookie('AuthToken');
-
-        window.location.reload();
+    const getData = async () => {
+        try{
+            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets/${userName}`);
+            const json = await response.json();
+            setSmeets(json);
+            setLoading(false);
+        } catch(err) {
+            console.error(err)
+        }
     }
 
-    return (
+    const getUserInfo = async () => {
+        try {
+            const userInfo = await fetch(`${process.env.REACT_APP_SERVERURL}/info/${userName}`);
+            const json = await userInfo.json();
+            setUserInfo(json);
+            console.log('info:', json)
+        } catch(err) {
+            console.log(err);
+        }
+    }
+    
+    useEffect(() => {
+        getData()
+        getUserInfo()
+    }, []);
+
+    if(loading) {
+        return (
+            <div>
+                <p>Loading...</p>
+            </div>
+        )
+    } return (
         <>
             <div className="mainContainer">
                 <div className="navSection">
-                    <SideNav setShowModal={setShowModal} signOut={signOut} />
+                    <SideNav setShowModal={setShowModal} />
                 </div>
 
                 <div className="mainFeed">
-                    {/* <ProfileHeader /> */}
-                    <Profile />
+                    <ProfileHeader userInfo={userInfo} />
+                    {smeets && smeets.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} />)}
+                    {/* {smeets && smeets.map((post) => {
+                        return <div key={post.id}>
+                            <p>{post.smeet}</p>
+                        </div>
+                    })} */}
                 </div>
 
                 <div className="trendSection">
