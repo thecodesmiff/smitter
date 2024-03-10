@@ -1,26 +1,15 @@
-import { useCookies } from "react-cookie";
-import { useEffect, useState } from 'react';
-import ProfileHeader from "../components/ProfileHeader";
-import SideNav from "../components/SideNav";
-import FormModal from "../components/FormModal";
-import Post from '../components/Post';
+import { useState, useEffect } from 'react';
+import Post from "./Post";
+import SmeetForm from './SmeetForm';
 
-
-
-export default function Profile() {
-
-    const [showModal, setShowModal] = useState(false);
-    const [cookie, setCookie, removeCookie] = useCookies(null);
-    const userName = cookie.UserName;
-    const authToken = cookie.AuthToken;
+export default function PostList({ userName, setShowModal }) {
     const [smeets, setSmeets] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userInfo, setUserInfo] = useState([]);
 
-
     const getData = async () => {
         try{
-            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets/${userName}`);
+            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets`)
             const json = await response.json();
             setSmeets(json);
             setLoading(false);
@@ -38,24 +27,24 @@ export default function Profile() {
             console.log(err);
         }
     }
-
+    
     useEffect(() => {
         getData();
         getUserInfo();
     }, []);
-
+    
 
     if(loading) {
         return (
             <div>
-                <p>loading...</p>
+                <p>Loading...</p>
             </div>
         )
-    } return (
+    }
+    return (
         <>
-            <ProfileHeader userInfo={userInfo} />
+            <SmeetForm />
             {smeets && smeets.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} />)}
-            {showModal && <FormModal setShowModal={setShowModal} showModal={showModal} />}
         </>
     )
 }

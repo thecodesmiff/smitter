@@ -1,28 +1,22 @@
-import { useRef, useState } from 'react';
-import styles from './SmeetForm.module.css';
-// import { GoHome, GoImage } from 'react-icons/go';
-import { HiOutlineGif,
-         HiOutlineListBullet,
-         HiOutlineFaceSmile,
-         HiOutlinePhoto
-} from 'react-icons/hi2';
+import { useState } from 'react';
+import styles from './FormModal.module.css';
+import  {   HiOutlineGif,
+            HiOutlineListBullet,
+            HiOutlineFaceSmile,
+        } from 'react-icons/hi2';
 import CharCount from './CharCount';
 import EmojiPicker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 import GifPicker from './GifPicker';
-import { FileDrop } from 'react-file-drop';
-import { useCookies } from 'react-cookie';
 
 
-export default function SmeetForm({ setShowModal }) {
+export default function FormModal({ setShowModal }) {
+
 
     const [smeetText, setSmeetText] = useState("");
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [showGifPicker, setShowGifPicker] = useState(false);
-    const [isUploading, setIsUploading] = useState(false);
-    const [cookie, setCookie, removeCookie] = useCookies(null);
-    const [images, setImages] = useState();
-    const username = cookie.UserName;
+    // const [showModal, setShowModal] = useState(false);
 
 
     const addEmoji = (e) => {
@@ -44,45 +38,18 @@ export default function SmeetForm({ setShowModal }) {
         !showGifPicker ? setShowGifPicker(true) : setShowGifPicker(false);
     }
 
-    const onFileInputChange = async (e) => {
-        const { files } = e.target;
-
-        e.preventDefault();
-        setIsUploading(false);
-        setIsUploading(true);
-        const data = new FormData();
-        data.append('cover', files[0]);
-        const response = await fetch(`http://localhost:8000/uploadCover/${username}`, {
-            method: 'POST',
-            body: data
-        })
-
-        const info = await response.json();
-        setImages(info[0].location);
-        // .then(() => {
-        //     setIsUploading(false);
-        //     console.log(files[0]);
-        // });
-    }
-
-    const fileInputRef = useRef(null);
-
-    const onTargetClick= ()  => {
-        fileInputRef.current.click();
-    }
-
     return (
         <>
             <div className={styles.container}>
                 <div className={styles.smeetform_container}>
-                    {/* <span onClick={() => setShowModal(false)}>X</span> */}
+                    <span onClick={() => {setShowModal(false)}}>X</span>
                     <div className={styles.smeetform_top}>
                         <form id="smeet" action="">
                             <textarea 
                                 name="smeetContent" 
                                 id="smeetcontent" 
-                                cols="40" 
-                                rows="3"
+                                cols="38" 
+                                rows="7"
                                 placeholder='What is happening?!'
                                 maxLength='240'  
                                 onChange={(e)=> {setSmeetText(e.target.value)}} 
@@ -90,31 +57,17 @@ export default function SmeetForm({ setShowModal }) {
                                 value={smeetText}
                             >
                             </textarea>
-                            <FileDrop
-                                onTargetClick={onTargetClick}
-                            >
-                                
-
                             <input 
                                 type="file"
-                                id="file-input"
+                                id="file"
                                 className={styles.file}
                                 accept=".jpg, .png"
-                                ref={fileInputRef}
-                                onChange={onFileInputChange}
                             />
-                            </FileDrop>
-                            {images && <div>
-                                    <img src={images} alt="" style={{height: '100%', width: '100%'}}/>
-                                </div>}
                         </form>
                     </div>
                     <div className={styles.smeetform_bottom}>
                         <div className={styles.smeetform_options}>
                             <div className={styles.options_left}>
-                                <label for='file-input'>
-                                    <HiOutlinePhoto className={styles.homeIcon} />
-                                </label>
                                 <HiOutlineGif className={styles.homeIcon} onClick={(toggleShowGif)} />
                                 <HiOutlineListBullet className={styles.homeIcon} />
                                 <HiOutlineFaceSmile className={styles.homeIcon} onClick={(toggleShowEmoji)} />

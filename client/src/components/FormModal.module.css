@@ -3,7 +3,7 @@
     margin: 0;
 }
 
-/* .container {
+.container {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -14,12 +14,12 @@
     justify-content: flex-start;
     align-items: center;
     background-color: rgba(140, 171, 201, 0.25);
-} */
+}
 
 .smeetform_container {
-    width: 95%;
+    width: 445px;
     /* border: 1px solid green; */
-    margin-top: 25px;
+    margin-top: 75px;
     display: flex;
     flex-direction: column;
     justify-content: center;
