@@ -11,10 +11,17 @@ import { HiOutlineArrowSmallLeft,
          HiOutlineCalendarDays
 } from "react-icons/hi2";
 
-export default function ProfileHeader({ userInfo }) {
+export default function ProfileHeader({ userInfo, userName }) {
 
     const { username, cover, display_name } = userInfo;
     const [smeetTotal, setSmeetTotal] = useState();
+    const [isUser, setIsUser] = useState();
+
+    const userCheck = () => {
+        username === userName ? setIsUser(true) : setIsUser(false);
+    }
+
+    console.log('Who are you?:', isUser)
 
     const getCount = async () => {
         try{
@@ -29,6 +36,7 @@ export default function ProfileHeader({ userInfo }) {
 
     useEffect(() => {
         getCount();
+        userCheck();
     });
 
     return (

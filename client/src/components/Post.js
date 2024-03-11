@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Post.module.css';
 import { HiOutlineChatBubbleOvalLeft,
     HiOutlineArrowPathRoundedSquare,
@@ -11,12 +11,13 @@ import { HiOutlineChatBubbleOvalLeft,
 } from "react-icons/hi2";
 import PostOptions from './PostOptions';
 
-export default function Post({ smeets, userInfo, userName }) {
+export default function Post({ userName, smeets, userInfo }) {
 
-    const {id, smeet, date, tweetimg, username, tweetgif} = smeets;
-    const { display_name } = userInfo;
+    const {id, smeet, date, tweetimg, username, tweetgif, display_name} = smeets;
+    // const { display_name } = userInfo;
     const [showOption, setShowOption] = useState(false);
 
+    
 
     return (
         <>

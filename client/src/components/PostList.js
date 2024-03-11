@@ -5,7 +5,7 @@ import SmeetForm from './SmeetForm';
 export default function PostList({ userName, setShowModal }) {
     const [smeets, setSmeets] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [userInfo, setUserInfo] = useState([]);
+    const [userInfo, setUserInfo] = useState();
 
     const getData = async () => {
         try{
@@ -27,6 +27,17 @@ export default function PostList({ userName, setShowModal }) {
             console.log(err);
         }
     }
+
+    // const getUserInfo = async () => {
+    //     try{
+    //         const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets/${userName}`)
+    //         const json = await response.json();
+    //         setUserInfo(json);
+    //     } catch(err) {
+    //         console.error(err)
+    //     }
+    // }
+
     
     useEffect(() => {
         getData();
@@ -44,7 +55,7 @@ export default function PostList({ userName, setShowModal }) {
     return (
         <>
             <SmeetForm />
-            {smeets && smeets.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} />)}
+            {smeets && smeets.map((post) => <Post key={post.id} userName={userName} userInfo={userInfo} smeets={post} />)}
         </>
     )
 }

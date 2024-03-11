@@ -53,7 +53,7 @@ export default function Profile() {
         )
     } return (
         <>
-            <ProfileHeader userInfo={userInfo} />
+            <ProfileHeader userInfo={userInfo} userName={userName} />
             {smeets && smeets.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} userName={userName} />)}
             {showModal && <FormModal setShowModal={setShowModal} showModal={showModal} />}
         </>
