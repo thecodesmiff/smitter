@@ -3,29 +3,15 @@
     margin: 0;
 }
 
-/* .container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    position: absolute;
-    left: 0;
-    top: 0;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: rgba(140, 171, 201, 0.25);
-} */
-
 .smeetform_container {
     width: 95%;
-    /* border: 1px solid green; */
     margin-top: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 10px;
     background-color: black;
-    border-radius: 15px;
+    border: 1px solid #333;
 }
 
 .smeetform_container > span {
@@ -69,7 +55,6 @@ textarea:focus {
     justify-content: space-between;
     align-items: center;
     padding: 5px 0;
-    /* background-color: blue; */
 }
 
 .options_container {

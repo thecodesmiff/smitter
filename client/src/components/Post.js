@@ -1,21 +1,28 @@
 
+import { useState } from 'react';
 import styles from './Post.module.css';
 import { HiOutlineChatBubbleOvalLeft,
     HiOutlineArrowPathRoundedSquare,
          HiOutlineHeart,
          HiOutlineBookmark,
-         HiOutlineArrowUpTray
+         HiOutlineArrowUpTray,
+         HiOutlineEllipsisHorizontal,
+         HiOutlineTrash
 } from "react-icons/hi2";
+import PostOptions from './PostOptions';
 
-export default function Post({ smeets, userInfo }) {
+export default function Post({ smeets, userInfo, userName }) {
 
-    const {id, smeet, date} = smeets;
-    const { username, display_name } = userInfo;
+    const {id, smeet, date, tweetimg, username, tweetgif} = smeets;
+    const { display_name } = userInfo;
+    const [showOption, setShowOption] = useState(false);
+
 
     return (
         <>
             <div className={styles.container}>
-                <div className={styles.postContainer}>
+                <div className={styles.postContainer} >
+                       {showOption && <PostOptions setShowOption={setShowOption} smeetId={id} /> }
                     <div className={styles.avatar}>
                         <div className={styles.img}></div>
                     </div>
@@ -24,9 +31,18 @@ export default function Post({ smeets, userInfo }) {
                             <h4>{display_name}</h4>
                             <p>@{username}</p>
                         </div>
+                        <div>
+                            { userName === username && <HiOutlineEllipsisHorizontal onClick={() => setShowOption(true)}/>}
+                        </div>
                     </div>
                     <div className={styles.postBody}>
                         <p>{smeet}</p>
+                    </div>
+                    <div>
+                        <img src={tweetimg} alt="" />
+                    </div>
+                    <div>
+                        <img src={tweetgif} alt="" />
                     </div>
                     <div className={styles.postFooter}>
                         <HiOutlineChatBubbleOvalLeft  className={`${styles.icon} ${styles.chatBubble}`} />

@@ -35,7 +35,7 @@ export default function Main({ showModal, setShowModal }) {
             const userInfo = await fetch(`${process.env.REACT_APP_SERVERURL}/info/${userName}`);
             const json = await userInfo.json();
             setUserInfo(json);
-            console.log('info:', json)
+
         } catch(err) {
             console.log(err);
         }
@@ -54,20 +54,42 @@ export default function Main({ showModal, setShowModal }) {
             </div>
         )
     } return (
+        // <>
+        //     <div className="mainContainer">
+        //         <div className="navSection">
+        //             <SideNav setShowModal={setShowModal} showModal={showModal} />
+        //         </div>
+
+        //         <div className="mainFeed">
+        //             <Outlet />
+        //             {/* <PostList userName={userName} setShowModal={setShowModal} /> */}
+        //             {/* {smeets && smeets.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} />)} */}
+        //         </div>
+
+        //         <div className="trendSection">
+        //             <div style={{color: 'yellow'}}>
+        //                 <h1>this is here</h1>
+        //             </div>
+        //         </div>
+        //         {showModal && <FormModal setShowModal={setShowModal} />}
+        //     </div>
+        // </>
         <>
             <div className="mainContainer">
-                <div className="navSection">
+                <div className="navContainer">
+                    <div className="nav">
                     <SideNav setShowModal={setShowModal} showModal={showModal} />
+                    </div>
                 </div>
-
-                <div className="mainFeed">
-                    <Outlet />
-                    {/* <PostList userName={userName} setShowModal={setShowModal} /> */}
-                    {/* {smeets && smeets.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} />)} */}
+                <div className="feedContainer">
+                    <div className="feed">
+                        <Outlet />
+                    </div>
                 </div>
-
-                <div className="trendSection">
-
+                <div className="trendContainer">
+                    <div className="trends">
+                        <p>This is just a thing</p>
+                    </div>
                 </div>
                 {showModal && <FormModal setShowModal={setShowModal} />}
             </div>

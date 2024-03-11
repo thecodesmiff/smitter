@@ -22,7 +22,31 @@ export default function SmeetForm({ setShowModal }) {
     const [isUploading, setIsUploading] = useState(false);
     const [cookie, setCookie, removeCookie] = useCookies(null);
     const [images, setImages] = useState();
+    const [gifs, setGifs] = useState();
     const username = cookie.UserName;
+
+
+
+    const handleSubmission =  (e) => {
+        e.preventDefault();
+        const date = new Date();
+        
+        const info = {
+            content: smeetText,
+            date: date,
+            username: username,
+            image: images,
+            gif: gifs
+        }
+
+        const response =  fetch(`http://localhost:8000/uploadSmeet`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(info)
+        })      
+    }
 
 
     const addEmoji = (e) => {
@@ -50,11 +74,11 @@ export default function SmeetForm({ setShowModal }) {
         e.preventDefault();
         setIsUploading(false);
         setIsUploading(true);
-        const data = new FormData();
-        data.append('cover', files[0]);
-        const response = await fetch(`http://localhost:8000/uploadCover/${username}`, {
+        const imgData = new FormData();
+        imgData.append('cover', files[0]);
+        const response = await fetch(`http://localhost:8000/uploadPostImg`, {
             method: 'POST',
-            body: data
+            body: imgData
         })
 
         const info = await response.json();
@@ -71,16 +95,17 @@ export default function SmeetForm({ setShowModal }) {
         fileInputRef.current.click();
     }
 
+
     return (
         <>
             <div className={styles.container}>
                 <div className={styles.smeetform_container}>
                     {/* <span onClick={() => setShowModal(false)}>X</span> */}
                     <div className={styles.smeetform_top}>
-                        <form id="smeet" action="">
+                        <form id="smeet" onSubmit={handleSubmission}>
                             <textarea 
-                                name="smeetContent" 
-                                id="smeetcontent" 
+                                // name="smeetContent" 
+                                // id="smeetcontent" 
                                 cols="40" 
                                 rows="3"
                                 placeholder='What is happening?!'
@@ -106,6 +131,9 @@ export default function SmeetForm({ setShowModal }) {
                             </FileDrop>
                             {images && <div>
                                     <img src={images} alt="" style={{height: '100%', width: '100%'}}/>
+                                </div>}
+                            {gifs && <div>
+                                    <img src={gifs} alt="" style={{height: '100%', width: '100%'}} />
                                 </div>}
                         </form>
                     </div>
@@ -140,6 +168,7 @@ export default function SmeetForm({ setShowModal }) {
                     <GifPicker 
                         data={data}
                         onEmojiSelect={addEmoji}
+                        setGifs={setGifs}
                     />
                 </div> }
             </div>

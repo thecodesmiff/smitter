@@ -11,8 +11,8 @@
     display: grid;
     grid-template-columns: auto 5fr;
     grid-template-rows: repeat(4, fit-content(2fr));
-    border-bottom: 1px solid #333;
-    border-top: 1px solid #333;
+    border: 1px solid #333;
+    position: relative;
 }
 
 .avatar {
@@ -39,6 +39,9 @@
     padding: 5px;
     display: flex;
     justify-self: left;
+    justify-content: space-between;
+    width: 95%;
+    /* border: 1px solid red; */
     /* grid-column-start: 2; */
     /*grid-column-end: 2;
     grid-row-start: 1;
@@ -100,4 +103,13 @@
 
 .heart:hover {
     stroke: #f5247f;
+}
+
+img {
+    height: 200;
+    width: 100%;
+}
+
+.hide {
+    display: none;
 }

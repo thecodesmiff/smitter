@@ -1,0 +1,24 @@
+.optionsModal {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    /* height: 130px; */
+    width: 150px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    z-index: 3;
+    border: 1px solid red;
+}
+
+.optionsModal ul {
+    list-style-type: none;
+}
+
+.optionsModal ul > li {
+    display: block;
+    margin: 10px;
+}
