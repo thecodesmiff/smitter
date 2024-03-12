@@ -1,7 +1,7 @@
 .optionsModal {
     position: absolute;
     right: 15px;
-    top: 20px;
+    top: 35px;
     /* height: 130px; */
     width: 150px;
     display: flex;
@@ -10,6 +10,7 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 10px;
+    background: #000;
     z-index: 3;
     border: 1px solid red;
 }

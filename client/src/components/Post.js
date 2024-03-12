@@ -13,38 +13,46 @@ import PostOptions from './PostOptions';
 
 export default function Post({ userName, smeets, userInfo }) {
 
-    const {id, smeet, date, tweetimg, username, tweetgif, display_name} = smeets;
-    // const { display_name } = userInfo;
+    const {id, smeet, date, tweetimg, username, tweetgif, display_name, avatar} = smeets;
+    const {cover, bio, location, website } = userInfo;
     const [showOption, setShowOption] = useState(false);
 
+    const toggleOption = () => {
+        !showOption ? setShowOption(true) : setShowOption(false);
+    }
     
 
     return (
         <>
             <div className={styles.container}>
-                <div className={styles.postContainer} >
-                       {showOption && <PostOptions setShowOption={setShowOption} smeetId={id} /> }
+                <div className={styles.postContainer}  >
+                       {/* {showOption && <PostOptions setShowOption={setShowOption} smeetId={id} /> } */}
                     <div className={styles.avatar}>
-                        <div className={styles.img}></div>
+                        {/* <div className={styles.img}></div> */}
+                        {
+                            avatar ? <img src={avatar} alt="" className={styles.img} /> :
+                            <img src="http://placehold.co/100x100" className={styles.img} />
+                        }
                     </div>
                     <div className={styles.postHeader}>
                         <div className={styles.postHeaderContainer}>    
                             <h4>{display_name}</h4>
                             <p>@{username}</p>
                         </div>
-                        <div>
-                            { userName === username && <HiOutlineEllipsisHorizontal onClick={() => setShowOption(true)}/>}
+                        <div className={styles.options} onClick={toggleOption}>
+                            { userName === username && <HiOutlineEllipsisHorizontal />}
+                            {showOption && <PostOptions setShowOption={setShowOption} smeetId={id} /> }
                         </div>
                     </div>
                     <div className={styles.postBody}>
                         <p>{smeet}</p>
                     </div>
-                    <div>
+                    {tweetimg && <div>
                         <img src={tweetimg} alt="" />
-                    </div>
-                    <div>
+                    </div>}
+                    {tweetgif && <div>
                         <img src={tweetgif} alt="" />
-                    </div>
+                    </div>}
                     <div className={styles.postFooter}>
                         <HiOutlineChatBubbleOvalLeft  className={`${styles.icon} ${styles.chatBubble}`} />
                         <HiOutlineArrowPathRoundedSquare className={`${styles.icon} ${styles.arrows}`} />

@@ -10,18 +10,22 @@ import { HiOutlineArrowSmallLeft,
          HiOutlineGift,
          HiOutlineCalendarDays
 } from "react-icons/hi2";
+import { useParams } from 'react-router-dom';
+import EditProfile from './EditProfile';
+
 
 export default function ProfileHeader({ userInfo, userName }) {
 
-    const { username, cover, display_name } = userInfo;
+    const { username, cover, display_name, avatar, bio, location, website } = userInfo;
     const [smeetTotal, setSmeetTotal] = useState();
     const [isUser, setIsUser] = useState();
+    const { smeetUser } = useParams();
+    const [showEdit, setShowEdit] = useState(false)
 
     const userCheck = () => {
-        username === userName ? setIsUser(true) : setIsUser(false);
+        username === smeetUser ? setIsUser(true) : setIsUser(false);
     }
 
-    console.log('Who are you?:', isUser)
 
     const getCount = async () => {
         try{
@@ -39,6 +43,7 @@ export default function ProfileHeader({ userInfo, userName }) {
         userCheck();
     });
 
+
     return (
         <>
             <div className={styles.container}>
@@ -54,14 +59,19 @@ export default function ProfileHeader({ userInfo, userName }) {
                 {/* <img src="http://placekitten.com/600/200" alt="" className={styles.headerImg} /> */}
                 <Cover username={username} cover={cover} />
                 <div className={styles.profileImg}>
-                    <img src="http://placekitten.com/100/100" alt="" />
+                    <img src={userInfo.avatar} alt="" />
                 </div>
                 <div className={styles.profileDetailsContainer}>
                     <div className={styles.profileMenu}>
-                        <HiOutlineEllipsisHorizontal  className={styles.moreButton}/>
-                        <HiOutlineEnvelope className={styles.envelope} />
-                        <HiOutlineBell className={styles.notification} />
-                        <p className={styles.followButton}>Following</p>
+                        {!isUser &&
+                            <div>
+                            <HiOutlineEllipsisHorizontal  className={styles.moreButton}/>
+                            <HiOutlineEnvelope className={styles.envelope} />
+                            <HiOutlineBell className={styles.notification} />
+                            </div>
+                        }
+                        <p className={styles.followButton} onClick={() => setShowEdit(true)}>Following</p>
+                        {showEdit && <EditProfile userInfo={userInfo} setShowEdit={setShowEdit} />}
                     </div>
                     <div className={styles.displayName}>
                         <h4>{display_name}</h4>
@@ -69,7 +79,7 @@ export default function ProfileHeader({ userInfo, userName }) {
                     </div>
                     <div className={styles.profileDetails}>
                         <div className={styles.bio}>
-                            <p>I've eaten nine birthday cakes and I still feel empty. He/Him. Sober AF.</p>
+                            <p>{bio}</p>
                         </div>
                         <div className={styles.info}>
                             <div className={styles.location}>

@@ -27,17 +27,6 @@ export default function PostList({ userName, setShowModal }) {
             console.log(err);
         }
     }
-
-    // const getUserInfo = async () => {
-    //     try{
-    //         const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets/${userName}`)
-    //         const json = await response.json();
-    //         setUserInfo(json);
-    //     } catch(err) {
-    //         console.error(err)
-    //     }
-    // }
-
     
     useEffect(() => {
         getData();

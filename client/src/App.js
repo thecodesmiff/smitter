@@ -10,6 +10,7 @@ import  { Route,
         } from 'react-router-dom';
 import PostList from './components/PostList';
 import { useState } from 'react';
+import EditProfile from './components/EditProfile';
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
     createBrowserRouter(createRoutesFromElements(
       <Route path='/' element={<Main showModal={showModal} setShowModal={setShowModal}/>}>,
         <Route path='/' element={<PostList userName={userName} />} />
-        <Route path='/:username' element={<Profile/>} />
+        <Route path='/:smeetUser' element={<Profile/>} />
+        <Route path='/settings/profile' element={<EditProfile/>} />
       </Route>
     ))
 

@@ -4,6 +4,7 @@ import ProfileHeader from "../components/ProfileHeader";
 import SideNav from "../components/SideNav";
 import FormModal from "../components/FormModal";
 import Post from '../components/Post';
+import { useParams } from 'react-router-dom';
 
 
 
@@ -16,11 +17,12 @@ export default function Profile() {
     const [smeets, setSmeets] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userInfo, setUserInfo] = useState([]);
+    const { smeetUser } = useParams();
 
 
     const getData = async () => {
         try{
-            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets/${userName}`);
+            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets/${smeetUser}`);
             const json = await response.json();
             setSmeets(json);
             setLoading(false);
@@ -31,7 +33,7 @@ export default function Profile() {
 
     const getUserInfo = async () => {
         try {
-            const userInfo = await fetch(`${process.env.REACT_APP_SERVERURL}/info/${userName}`);
+            const userInfo = await fetch(`${process.env.REACT_APP_SERVERURL}/info/${smeetUser}`);
             const json = await userInfo.json();
             setUserInfo(json);
         } catch(err) {
@@ -53,7 +55,7 @@ export default function Profile() {
         )
     } return (
         <>
-            <ProfileHeader userInfo={userInfo} userName={userName} />
+            <ProfileHeader userInfo={userInfo} userName={smeetUser} />
             {smeets && smeets.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} userName={userName} />)}
             {showModal && <FormModal setShowModal={setShowModal} showModal={showModal} />}
         </>
