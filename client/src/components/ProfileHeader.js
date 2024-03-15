@@ -10,26 +10,34 @@ import { HiOutlineArrowSmallLeft,
          HiOutlineGift,
          HiOutlineCalendarDays
 } from "react-icons/hi2";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import EditProfile from './EditProfile';
 
 
-export default function ProfileHeader({ userInfo, userName }) {
+export default function ProfileHeader({ userInfo, userName, thisUser }) {
+
 
     const { username, cover, display_name, avatar, bio, location, website } = userInfo;
     const [smeetTotal, setSmeetTotal] = useState();
-    const [isUser, setIsUser] = useState();
+    const [isUser, setIsUser] = useState(false);
     const { smeetUser } = useParams();
     const [showEdit, setShowEdit] = useState(false)
 
+    console.log('j.cole', userInfo)
+
     const userCheck = () => {
-        username === smeetUser ? setIsUser(true) : setIsUser(false);
+        thisUser === userName ? setIsUser(true) : setIsUser(false);
+    }
+
+    const navigate = useNavigate();
+    const goBack = () => {
+        navigate(-1);
     }
 
 
     const getCount = async () => {
         try{
-            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeetcount/${username}`);
+            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeetcount/${thisUser}`);
             const json = await response.json();
             setSmeetTotal(json.count);
         } catch(err) {
@@ -49,7 +57,7 @@ export default function ProfileHeader({ userInfo, userName }) {
             <div className={styles.container}>
                 <div className={styles.profileHeader}>
                     <div className={styles.headerLeft}>
-                        <HiOutlineArrowSmallLeft className={styles.backArrow} />
+                        <HiOutlineArrowSmallLeft className={styles.backArrow} onClick={goBack} />
                     </div>
                     <div className={styles.headerRight}>
                         <h4>{display_name}</h4>
@@ -57,25 +65,28 @@ export default function ProfileHeader({ userInfo, userName }) {
                     </div>
                 </div>
                 {/* <img src="http://placekitten.com/600/200" alt="" className={styles.headerImg} /> */}
-                <Cover username={username} cover={cover} />
+                <Cover username={thisUser} cover={cover} />
                 <div className={styles.profileImg}>
                     <img src={userInfo.avatar} alt="" />
                 </div>
                 <div className={styles.profileDetailsContainer}>
-                    <div className={styles.profileMenu}>
-                        {!isUser &&
-                            <div>
+                    {!isUser ? 
+                    <div className={styles.userProfileMenu}>
                             <HiOutlineEllipsisHorizontal  className={styles.moreButton}/>
                             <HiOutlineEnvelope className={styles.envelope} />
                             <HiOutlineBell className={styles.notification} />
-                            </div>
-                        }
-                        <p className={styles.followButton} onClick={() => setShowEdit(true)}>Following</p>
+                        <p className={styles.followButton} onClick={() => setShowEdit(true)}>Follow?</p>
                         {showEdit && <EditProfile userInfo={userInfo} setShowEdit={setShowEdit} />}
                     </div>
+                        :
+                    <div className={styles.profileMenu}>
+                        <p className={styles.followButton} onClick={() => setShowEdit(true)}>Edit Profile</p>
+                        {showEdit && <EditProfile userInfo={userInfo} setShowEdit={setShowEdit} />}
+                    </div>
+                        }  
                     <div className={styles.displayName}>
                         <h4>{display_name}</h4>
-                        <p>@{username}</p>
+                        <p>@{thisUser}</p>
                     </div>
                     <div className={styles.profileDetails}>
                         <div className={styles.bio}>

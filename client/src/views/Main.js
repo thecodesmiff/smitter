@@ -9,22 +9,23 @@ import PostList from "../components/PostList";
 import FormModal from '../components/FormModal';
 
 
-export default function Main({ showModal, setShowModal }) {
+export default function Main({ showModal, setShowModal, setSmeetList }) {
 
     // const [showModal, setShowModal] = useState(false);
     const [cookie, setCookie, removeCookie] = useCookies(null);
     const userName = cookie.UserName;
     const authToken = cookie.AuthToken
-    const [smeets, setSmeets] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [userInfo, setUserInfo] = useState([]);
+    const [userInfo, setUserInfo] = useState();
 
     const getData = async () => {
         try{
             const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets`)
             const json = await response.json();
-            setSmeets(json);
+            // setSmeets(json);
             setLoading(false);
+            console.log('I triggered!');
+            return json;
         } catch(err) {
             console.error(err)
         }
@@ -42,7 +43,7 @@ export default function Main({ showModal, setShowModal }) {
     }
     
     useEffect(() => {
-        getData();
+        getData().then((response) => setSmeetList(oldSmeets => [...oldSmeets, response]))
         getUserInfo();
     }, []);
     
@@ -78,7 +79,7 @@ export default function Main({ showModal, setShowModal }) {
             <div className="mainContainer">
                 <div className="navContainer">
                     <div className="nav">
-                    <SideNav setShowModal={setShowModal} showModal={showModal} />
+                    <SideNav setShowModal={setShowModal} showModal={showModal} setSmeetList={setSmeetList} />
                     </div>
                 </div>
                 <div className="feedContainer">
@@ -91,7 +92,7 @@ export default function Main({ showModal, setShowModal }) {
                         <p>This is just a thing</p>
                     </div>
                 </div>
-                {showModal && <FormModal setShowModal={setShowModal} />}
+                {/* {showModal && <FormModal setShowModal={setShowModal} setSmeetList={setSmeetList}  />} */}
             </div>
         </>
     )

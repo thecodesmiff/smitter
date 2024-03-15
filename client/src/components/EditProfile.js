@@ -17,9 +17,6 @@ export default function EditProfile({setShowEdit, userInfo}) {
     const [location, setLocation] = useState(userInfo.location);
     const [website, setWebsite] = useState(userInfo.website);
 
-    // const { email, username, cover, display_name, bio, avatar, location, website } = userInfo;
-
-console.log('omg:',userInfo);
 
     const updateImage = async (files, e) => {
         e.preventDefault();

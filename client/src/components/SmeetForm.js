@@ -12,6 +12,7 @@ import data from '@emoji-mart/data';
 import GifPicker from './GifPicker';
 import { FileDrop } from 'react-file-drop';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function SmeetForm({ setShowModal }) {
@@ -25,9 +26,12 @@ export default function SmeetForm({ setShowModal }) {
     const [gifs, setGifs] = useState();
     const username = cookie.UserName;
 
+    const navigate = useNavigate();
+    const refreshPage = () => {
+        navigate(0);
+    }
 
-
-    const handleSubmission =  (e) => {
+    const handleSubmission =  async (e) => {
         e.preventDefault();
         const date = new Date();
         
@@ -39,13 +43,18 @@ export default function SmeetForm({ setShowModal }) {
             gif: gifs
         }
 
-        const response =  fetch(`http://localhost:8000/uploadSmeet`, {
+        const response =  await fetch(`http://localhost:8000/uploadSmeet`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(info)
         })      
+
+        await response.json();
+        setSmeetText('');
+        refreshPage();
+        // window.location.reload();
     }
 
 
@@ -105,7 +114,7 @@ export default function SmeetForm({ setShowModal }) {
                         <form id="smeet" onSubmit={handleSubmission}>
                             <textarea 
                                 // name="smeetContent" 
-                                // id="smeetcontent" 
+                                id="smeetcontent" 
                                 cols="40" 
                                 rows="3"
                                 placeholder='What is happening?!'

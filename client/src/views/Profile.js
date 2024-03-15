@@ -1,30 +1,29 @@
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from 'react';
 import ProfileHeader from "../components/ProfileHeader";
-import SideNav from "../components/SideNav";
 import FormModal from "../components/FormModal";
 import Post from '../components/Post';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 
 
 
 export default function Profile() {
 
+    const thisUser = useLocation().pathname.split('/')[1];
     const [showModal, setShowModal] = useState(false);
     const [cookie, setCookie, removeCookie] = useCookies(null);
     const userName = cookie.UserName;
     const authToken = cookie.AuthToken;
-    const [smeets, setSmeets] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [userInfo, setUserInfo] = useState([]);
+    const [smeetList, setSmeetList] = useState([]);
+    const [userInfo, setUserInfo] = useState();
     const { smeetUser } = useParams();
-
 
     const getData = async () => {
         try{
-            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets/${smeetUser}`);
+            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets/${thisUser}`);
             const json = await response.json();
-            setSmeets(json);
+            setSmeetList(json);
             setLoading(false);
         } catch(err) {
             console.error(err)
@@ -33,7 +32,7 @@ export default function Profile() {
 
     const getUserInfo = async () => {
         try {
-            const userInfo = await fetch(`${process.env.REACT_APP_SERVERURL}/info/${smeetUser}`);
+            const userInfo = await fetch(`${process.env.REACT_APP_SERVERURL}/info/${thisUser}`);
             const json = await userInfo.json();
             setUserInfo(json);
         } catch(err) {
@@ -55,9 +54,8 @@ export default function Profile() {
         )
     } return (
         <>
-            <ProfileHeader userInfo={userInfo} userName={smeetUser} />
-            {smeets && smeets.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} userName={userName} />)}
-            {showModal && <FormModal setShowModal={setShowModal} showModal={showModal} />}
+            <ProfileHeader userInfo={userInfo} userName={userName} thisUser={thisUser} />
+            {smeetList && smeetList.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} userName={userName} setShowModal={setShowModal} />)}
         </>
     )
 }

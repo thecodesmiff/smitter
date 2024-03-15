@@ -10,8 +10,9 @@ import SmeetForm from "./SmeetForm";
 import { useCookies } from "react-cookie";
 import { NavLink } from 'react-router-dom';
 import styles from './SideNav.module.css'
+import FormModal from './FormModal';
 
-export default function SideNav({ showModal, setShowModal }) {
+export default function SideNav({ showModal, setShowModal, setSmeetList }) {
 
     const [cookie, setCookie, removeCookie] = useCookies(null);
     const username = cookie.UserName;
@@ -52,6 +53,7 @@ export default function SideNav({ showModal, setShowModal }) {
     }
     return (
         <>
+             {showModal && <FormModal setShowModal={setShowModal} setSmeetList={setSmeetList} />}
             <div className={styles.nav}>
                 <div className="logo">X</div>
                     <NavLink to='/'>
@@ -72,7 +74,7 @@ export default function SideNav({ showModal, setShowModal }) {
                     <HiOutlineEnvelope className={styles.icon} />
                     <span>Messages</span>
                 </div>
-                    <NavLink to={`/${cookie.UserName}`} reloadDocument >
+                    <NavLink to={`/${cookie.UserName}`}>
                 <div className={styles.menuItems}>
                         <HiOutlineUser className={styles.icon} />
                         <span>Profile</span>    

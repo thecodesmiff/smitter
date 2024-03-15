@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import styles from './FormModal.module.css';
+import { useState, useRef, useEffect } from 'react';
+import styles from './EditSmeet.module.css';
 import  {   HiOutlineGif,
             HiOutlineListBullet,
             HiOutlineFaceSmile,
@@ -14,49 +14,50 @@ import { useCookies } from 'react-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
-export default function FormModal({ setShowModal, setSmeetList }) {
+export default function EditSmeet() {
 
-
-    const [smeetText, setSmeetText] = useState("");
+    const [smeets, setSmeets] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+    const [smeetText, setSmeetText] = useState();
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [showGifPicker, setShowGifPicker] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
-    const [cookie, setCookie, removeCookie] = useCookies(null);
+    const [cookie, setCookie] = useCookies(null);
     const [images, setImages] = useState();
     const [gifs, setGifs] = useState();
     const username = cookie.UserName;
     const location = useLocation();
 
+    const locationURL = location.pathname.split('/');
+    const tweetId = locationURL[3];
+
     const navigate = useNavigate();
     const refreshPage = () => {
         navigate(0);
     }
+    const closeEditPage = () => {
+        navigate(-1);
+    }
 
 
-    const handleSubmission = async (e) => {
+    const handleEditSub = async (e) => {
         e.preventDefault();
-        const date = new Date();
         
         const info = {
-            content: smeetText,
-            date: date,
-            username: username,
-            image: images,
-            gif: gifs
+            smeet: smeetText,
+            tweetimg: images,
+            tweetgif: gifs
         }
 
-        const response = await fetch(`http://localhost:8000/uploadSmeet`, {
-            method: 'POST',
+        const response = await fetch(`${process.env.REACT_APP_SERVERURL}/editsmeet/${tweetId}`, {
+            method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(info)
-        })     
-
-
-        const newSmeet = await response.json()
-        setSmeetList(oldSmeets  => [...oldSmeets, newSmeet]);
-        setShowModal(false)
+            body: JSON.stringify(info),
+        })
+        const data = await response.json();
+        closeEditPage();
         // refreshPage();
     }
 
@@ -84,7 +85,7 @@ export default function FormModal({ setShowModal, setSmeetList }) {
     const onFileInputChange = async (e) => {
         const { files } = e.target;
 
-        // e.preventDefault();
+        e.preventDefault();
         setIsUploading(false);
         setIsUploading(true);
         const imgData = new FormData();
@@ -105,11 +106,32 @@ export default function FormModal({ setShowModal, setSmeetList }) {
         fileInputRef.current.click();
     }
 
-    return (
+    const getSmeets = async () => {
+        const smeet = await fetch(`${process.env.REACT_APP_SERVERURL}/getsmeet/${tweetId}`)
+        const response = await smeet.json();
+        setSmeets(response);
+        setSmeetText(response.smeet)
+        setIsLoading(false);
+    }
+
+    useEffect(() => {
+        getSmeets();
+    }, [])
+
+    if(isLoading) {
+        return(
+            <>
+                <p>loading...</p>
+            </>
+        )
+    }
+
+
+    return(
         <>
             <div className={styles.container}>
                 <div className={styles.smeetform_container}>
-                    <span onClick={() => {setShowModal(false)}}>X</span>
+                    <span onClick={() => {navigate(-1)}}>X</span>
                     <div className={styles.smeetform_top}>
                         <form id="smeet">
                             <textarea 
@@ -117,9 +139,9 @@ export default function FormModal({ setShowModal, setSmeetList }) {
                                 id="smeetcontent" 
                                 cols="40" 
                                 rows="3"
-                                placeholder='What is happening?!'
+                                // placeholder='What is happening?!'
                                 maxLength='240'  
-                                onChange={(e)=> {setSmeetText(e.target.value)}} 
+                                onChange={(e)=> setSmeetText(e.target.value)} 
                                 onClick={() => {setShowEmojiPicker(false)}} 
                                 value={smeetText}
                             >
@@ -138,11 +160,11 @@ export default function FormModal({ setShowModal, setSmeetList }) {
                                 onChange={onFileInputChange}
                             />
                             </FileDrop>
-                            {images && <div>
-                                    <img src={images} alt="" style={{height: '100%', width: '100%'}}/>
+                            {smeets.tweetimg && <div>
+                                    <img src={smeets.tweetimg} alt="" style={{height: '100%', width: '100%'}}/>
                                 </div>}
-                            {gifs && <div>
-                                    <img src={gifs} alt="" style={{height: '100%', width: '100%'}} />
+                            {smeets.tweetgif && <div>
+                                    <img src={smeets.tweetgif} alt="" style={{height: '100%', width: '100%'}} />
                                 </div>}
                         </form>
                     </div>
@@ -161,7 +183,7 @@ export default function FormModal({ setShowModal, setSmeetList }) {
                             </div>
                         </div>
                         <div className={styles.smeetform_submit}>
-                            <button form="smeet" className={styles.button} type="submit" onClick={handleSubmission}>Post</button>
+                            <button form="smeet" className={styles.button} type="submit" onClick={handleEditSub}>Post</button>
                         </div>
                     </div>
                 </div>

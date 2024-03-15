@@ -27,9 +27,13 @@
 }
 
 .moreButton, .envelope, .notification, .followButton {
-    border: 1px solid #999;
+    border: 1px solid #555;
     border-radius: 13px;
     padding: 4px;
+}
+
+.moreButton, .envelope, .notification {
+    font-size: 1.7em;
 }
 
 .followButton {
@@ -41,11 +45,19 @@
 
 .profileMenu {
     width: 50%;
-    align-self: flex-end;
     display: flex;
-    justify-content: space-around;
+    align-self: flex-end;
+    flex-direction: row-reverse;
     align-items: flex-start;
-    margin-top: -15px;
+    margin-top: -10px;
+}
+
+.userProfileMenu {
+    width: 40%;
+    display: flex;
+    align-self: flex-end;
+    justify-content: space-between;
+    margin-top: -10px;
 }
 
 .headerImg {
@@ -64,6 +76,12 @@
     top: -50px;
     left: 15px;
     overflow: hidden;
+}
+
+.profileImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profileDetailsContainer {
@@ -122,5 +140,6 @@
     color: #fff;
     font-weight: bolder;
 }
+
 
 

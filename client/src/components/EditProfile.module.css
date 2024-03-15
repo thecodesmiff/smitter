@@ -58,6 +58,12 @@
     background-color: blue;
 }
 
+.profileImg img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
 .editContainer {
     /* border: 1px solid red; */
     background-color: #000;
