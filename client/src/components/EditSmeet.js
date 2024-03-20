@@ -3,7 +3,8 @@ import styles from './EditSmeet.module.css';
 import  {   HiOutlineGif,
             HiOutlineListBullet,
             HiOutlineFaceSmile,
-            HiOutlinePhoto
+            HiOutlinePhoto,
+            HiOutlineXCircle
         } from 'react-icons/hi2';
 import CharCount from './CharCount';
 import EmojiPicker from '@emoji-mart/react';
@@ -16,6 +17,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function EditSmeet() {
 
+    const [showContent, setShowContent] = useState(true);
     const [smeets, setSmeets] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [smeetText, setSmeetText] = useState();
@@ -25,7 +27,7 @@ export default function EditSmeet() {
     const [cookie, setCookie] = useCookies(null);
     const [images, setImages] = useState();
     const [gifs, setGifs] = useState();
-    const username = cookie.UserName;
+    // const username = cookie.UserName;
     const location = useLocation();
 
     const locationURL = location.pathname.split('/');
@@ -42,21 +44,41 @@ export default function EditSmeet() {
 
     const handleEditSub = async (e) => {
         e.preventDefault();
-        
-        const info = {
-            smeet: smeetText,
-            tweetimg: images,
-            tweetgif: gifs
+
+        if(gifs === undefined) {
+
+            const info = {
+                smeet: smeetText,
+                tweetimg: images,
+                tweetgif: smeets.tweetgif
+            }
+
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/editsmeet/${tweetId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(info),
+            })
+            const data = await response.json();
+
+        } else{
+            const info = {
+                smeet: smeetText,
+                tweetimg: images,
+                tweetgif: gifs
+            }
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/editsmeet/${tweetId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(info),
+            })
+            const data = await response.json();
         }
 
-        const response = await fetch(`${process.env.REACT_APP_SERVERURL}/editsmeet/${tweetId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(info),
-        })
-        const data = await response.json();
+        // const data = await response.json();
         closeEditPage();
         // refreshPage();
     }
@@ -118,6 +140,7 @@ export default function EditSmeet() {
         getSmeets();
     }, [])
 
+
     if(isLoading) {
         return(
             <>
@@ -160,12 +183,23 @@ export default function EditSmeet() {
                                 onChange={onFileInputChange}
                             />
                             </FileDrop>
-                            {smeets.tweetimg && <div>
-                                    <img src={smeets.tweetimg} alt="" style={{height: '100%', width: '100%'}}/>
+                            {smeets.tweetimg && <div className={styles.imgRemove}>
+                                {showContent && <div className={styles.remove}><HiOutlineXCircle className={styles.editImgIcon} onClick={() => setShowContent(false)} /></div> }
+                                {showContent && <img src={smeets.tweetimg} alt="" style={{height: '100%', width: '100%'}}/> }
                                 </div>}
-                            {smeets.tweetgif && <div>
-                                    <img src={smeets.tweetgif} alt="" style={{height: '100%', width: '100%'}} />
+                            {smeets.tweetgif && <div className={styles.imgRemove}>
+                                        {showContent && <div className={styles.remove}><HiOutlineXCircle className={styles.editIcon} onClick={() => setShowContent(false)} /></div> }
+                                        {showContent && <img src={smeets.tweetgif} alt="" style={{height: '100%', width: '100%'}} /> }
                                 </div>}
+                            {gifs && <div className={styles.imgRemove}>
+                                        <div className={styles.remove}><HiOutlineXCircle className={styles.editIcon} onClick={() => setGifs()}  /></div>
+                                        <img src={gifs} alt=""  /> 
+                                        </div>}
+                            {images && <div className={styles.imgRemove}>
+                                        <div className={styles.remove}><HiOutlineXCircle className={styles.editImgIcon} onClick={() => setImages()} /></div>
+                            <img src={images} alt="" />
+                            </div>}
+                            
                         </form>
                     </div>
                     <div className={styles.smeetform_bottom}>
@@ -200,6 +234,7 @@ export default function EditSmeet() {
                         data={data}
                         onEmojiSelect={addEmoji}
                         setGifs={setGifs}
+                        gifs={gifs}
                     />
                     </div>}
             </div>

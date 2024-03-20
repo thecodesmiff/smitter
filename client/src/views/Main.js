@@ -5,8 +5,9 @@ import Post from "../components/Post";
 import ProfileHeader from "../components/ProfileHeader";
 import Profile from "./Profile";
 import { Outlet } from "react-router-dom";
-import PostList from "../components/PostList";
 import FormModal from '../components/FormModal';
+
+
 
 
 export default function Main({ showModal, setShowModal, setSmeetList }) {
@@ -15,46 +16,12 @@ export default function Main({ showModal, setShowModal, setSmeetList }) {
     const [cookie, setCookie, removeCookie] = useCookies(null);
     const userName = cookie.UserName;
     const authToken = cookie.AuthToken
-    const [loading, setLoading] = useState(true);
-    const [userInfo, setUserInfo] = useState();
 
-    const getData = async () => {
-        try{
-            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets`)
-            const json = await response.json();
-            // setSmeets(json);
-            setLoading(false);
-            console.log('I triggered!');
-            return json;
-        } catch(err) {
-            console.error(err)
-        }
-    }
 
-    const getUserInfo = async () => {
-        try {
-            const userInfo = await fetch(`${process.env.REACT_APP_SERVERURL}/info/${userName}`);
-            const json = await userInfo.json();
-            setUserInfo(json);
-
-        } catch(err) {
-            console.log(err);
-        }
-    }
-    
-    useEffect(() => {
-        getData().then((response) => setSmeetList(oldSmeets => [...oldSmeets, response]))
-        getUserInfo();
-    }, []);
     
 
-    if(loading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
-    } return (
+
+    return (
         // <>
         //     <div className="mainContainer">
         //         <div className="navSection">
@@ -79,7 +46,7 @@ export default function Main({ showModal, setShowModal, setSmeetList }) {
             <div className="mainContainer">
                 <div className="navContainer">
                     <div className="nav">
-                    <SideNav setShowModal={setShowModal} showModal={showModal} setSmeetList={setSmeetList} />
+                    <SideNav setShowModal={setShowModal} showModal={showModal} setSmeetList={setSmeetList}/>
                     </div>
                 </div>
                 <div className="feedContainer">
@@ -92,7 +59,7 @@ export default function Main({ showModal, setShowModal, setSmeetList }) {
                         <p>This is just a thing</p>
                     </div>
                 </div>
-                {/* {showModal && <FormModal setShowModal={setShowModal} setSmeetList={setSmeetList}  />} */}
+                {showModal && <FormModal setShowModal={setShowModal} setSmeetList={setSmeetList}  />}
             </div>
         </>
     )

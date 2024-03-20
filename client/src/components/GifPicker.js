@@ -3,7 +3,7 @@ import { useState } from "react";
 import GifPick from "gif-picker-react";
 
 
-export default function GifPicker({setGifs}) {
+export default function GifPicker({setGifs, gifs}) {
     // const [gif, setGif] = useState(null);
 
     // console.log(gif)

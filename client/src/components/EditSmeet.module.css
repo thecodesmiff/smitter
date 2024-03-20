@@ -15,7 +15,7 @@
     align-items: center;
     background-color: rgba(140, 171, 201, 0.25);
     position: fixed;
-    z-index: 4;
+    z-index: 1;
 }
 
 .smeetform_container {
@@ -131,3 +131,23 @@ textarea:focus {
 .file {
     display: none;
 }
+
+.imgRemove {
+    position: relative;
+}
+
+.remove {
+    /* width: 15px; */
+    padding: 5px;
+    text-align: center;
+    border-radius: 8px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.editIcon, .editImageIcon {
+    fill: #777;
+    font-size: 2em;
+}
+

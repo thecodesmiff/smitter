@@ -13,61 +13,30 @@ import { useState, useEffect } from 'react';
 import EditProfile from './components/EditProfile';
 import EditSmeet from './components/EditSmeet';
 
-
 function App() {
-  const [cookie, setCookie, removeCookie] = useCookies(null);
+  const [cookie] = useCookies(null);
   const authToken = cookie.AuthToken;
   const userName = cookie.UserName;
   const [showModal, setShowModal] = useState(false);
   const [smeetList, setSmeetList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState();
-
-  const getData = async () => {
-    try{
-        const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets`);
-        const json = await response.json();
-        setSmeetList(json);
-        setLoading(false);
-    } catch(err) {
-        console.error(err)
-    }
-}
-
-const getUserInfo = async () => {
-  try {
-      const userInfo = await fetch(`${process.env.REACT_APP_SERVERURL}/info/${userName}`);
-      const json = await userInfo.json();
-      setUserInfo(json);
-  } catch(err) {
-      console.log(err);
-  }
-}
-
-
-useEffect(() => {
-  getData();
-  getUserInfo();
-}, [])
+  const [userSmeets, setUserSmeets] = useState([]);
+  const [user, setUser] = useState('');
 
   const router = 
     createBrowserRouter(createRoutesFromElements(
-      <Route path='/' element={<Main showModal={showModal} setShowModal={setShowModal} smeetList={smeetList} setSmeetList={setSmeetList}/>}>,
-        <Route path='/' element={<PostList userName={userName} />} />
-        <Route path={`/${userName}`} element={<Profile />} />
-        <Route path='/:username' element={<Profile />} />
+      <Route path='/' element={<Main showModal={showModal} setShowModal={setShowModal} setSmeetList={setSmeetList}  userName={userName}/> }>,
+        <Route path='/' element={<PostList userName={userName}  setSmeetList={setSmeetList} />} />
+        <Route path='/:username' element={<Profile userSmeets={userSmeets} setUserSmeets={setUserSmeets} user={user} />} />
         <Route path='/settings/profile' element={<EditProfile/>} />
         <Route path='/smeet/edit/:id' element={<EditSmeet />} />
       </Route>
     ))
 
-    if(loading) {
-      return(
-        <>
-          <p>Loading...</p>
-        </>
-      )
-    }
+  //   useEffect(() =>  {
+  //     // setSocket(io(`${process.env.REACT_APP_SERVERURL}`, { autoConnect: false}));
+  //     socket.emit("newUser", userName)
+  // }, [])
+
 
   return (
     <div className="App">

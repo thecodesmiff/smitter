@@ -3,7 +3,8 @@ import styles from './FormModal.module.css';
 import  {   HiOutlineGif,
             HiOutlineListBullet,
             HiOutlineFaceSmile,
-            HiOutlinePhoto
+            HiOutlinePhoto,
+            HiOutlineXCircle
         } from 'react-icons/hi2';
 import CharCount from './CharCount';
 import EmojiPicker from '@emoji-mart/react';
@@ -35,6 +36,7 @@ export default function FormModal({ setShowModal, setSmeetList }) {
 
     const handleSubmission = async (e) => {
         e.preventDefault();
+
         const date = new Date();
         
         const info = {
@@ -55,9 +57,9 @@ export default function FormModal({ setShowModal, setSmeetList }) {
 
 
         const newSmeet = await response.json()
-        setSmeetList(oldSmeets  => [...oldSmeets, newSmeet]);
         setShowModal(false)
-        // refreshPage();
+        setSmeetList(oldSmeets  => [...oldSmeets, newSmeet]);
+        refreshPage();
     }
 
 
@@ -84,7 +86,7 @@ export default function FormModal({ setShowModal, setSmeetList }) {
     const onFileInputChange = async (e) => {
         const { files } = e.target;
 
-        // e.preventDefault();
+        e.preventDefault();
         setIsUploading(false);
         setIsUploading(true);
         const imgData = new FormData();
@@ -107,7 +109,7 @@ export default function FormModal({ setShowModal, setSmeetList }) {
 
     return (
         <>
-            <div className={styles.container}>
+            <div className={styles.modal_container}>
                 <div className={styles.smeetform_container}>
                     <span onClick={() => {setShowModal(false)}}>X</span>
                     <div className={styles.smeetform_top}>
@@ -141,7 +143,8 @@ export default function FormModal({ setShowModal, setSmeetList }) {
                             {images && <div>
                                     <img src={images} alt="" style={{height: '100%', width: '100%'}}/>
                                 </div>}
-                            {gifs && <div>
+                            {gifs && <div className={styles.imgRemove}>
+                                        <div className={styles.remove}><HiOutlineXCircle className={styles.editIcon} onClick={() => setGifs()} /></div>
                                     <img src={gifs} alt="" style={{height: '100%', width: '100%'}} />
                                 </div>}
                         </form>

@@ -4,10 +4,15 @@ import {
 } from "react-icons/hi2";
 import styles from './PostOptions.module.css';
 import EditSmeet from './EditSmeet';
-import {  Link } from 'react-router-dom';
+import {  Link, useNavigate } from 'react-router-dom';
 
 
 export default function PostOptions({ setShowOption, smeetId }) {
+
+    const navigate = useNavigate();
+    const refreshPage = () => {
+        navigate(0);
+    }
 
     const [showEdit, setShowEdit] = useState(false);
 
@@ -17,6 +22,8 @@ export default function PostOptions({ setShowOption, smeetId }) {
                 method: 'POST'
             });
             setShowOption(false);
+            refreshPage();
+
         } catch(err) {
             console.error(err);
         }
@@ -34,9 +41,9 @@ export default function PostOptions({ setShowOption, smeetId }) {
                                 <li onClick={openThings}>Edit Tweet</li>
                                 
                             </ul> */}
-                            <div onClick={deleteTweet} style={{paddingBottom: '30px'}}><HiOutlineTrash />Delete Tweet</div>
+                            <div onClick={deleteTweet} style={{paddingBottom: '30px'}}><HiOutlineTrash />Delete Smeet</div>
                                 <Link to={`/smeet/edit/${smeetId}`}>
-                                <div>Edit Tweet</div>
+                                <div>Edit Smeet</div>
                                 </Link>
                         </div>
         </>

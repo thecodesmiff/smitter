@@ -6,7 +6,7 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    position: absolute;
+    position: absolute important;
     left: 0;
     top: 0;
     flex-direction: column;
@@ -55,7 +55,6 @@
     top: -50px;
     left: 20px;
     overflow: hidden;
-    background-color: blue;
 }
 
 .profileImg img {

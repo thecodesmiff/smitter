@@ -4,10 +4,12 @@ import ProfileHeader from "../components/ProfileHeader";
 import FormModal from "../components/FormModal";
 import Post from '../components/Post';
 import { useParams, useLocation } from 'react-router-dom';
+import getUserSmeets from '../functions/GetUserSmeets'
+import GetUserInfo from "../functions/GetUserInfo";
 
 
 
-export default function Profile() {
+export default function Profile({ userSmeets, socket, user }) {
 
     const thisUser = useLocation().pathname.split('/')[1];
     const [showModal, setShowModal] = useState(false);
@@ -16,19 +18,8 @@ export default function Profile() {
     const authToken = cookie.AuthToken;
     const [loading, setLoading] = useState(true);
     const [smeetList, setSmeetList] = useState([]);
-    const [userInfo, setUserInfo] = useState();
     const { smeetUser } = useParams();
-
-    const getData = async () => {
-        try{
-            const response =  await fetch(`${process.env.REACT_APP_SERVERURL}/smeets/${thisUser}`);
-            const json = await response.json();
-            setSmeetList(json);
-            setLoading(false);
-        } catch(err) {
-            console.error(err)
-        }
-    }
+    const [userInfo, setUserInfo] = useState();
 
     const getUserInfo = async () => {
         try {
@@ -40,22 +31,18 @@ export default function Profile() {
         }
     }
 
+
     useEffect(() => {
-        getData();
-        getUserInfo();
-    }, []);
+        getUserSmeets(thisUser).then((smeets) => setSmeetList(smeets))
+        GetUserInfo(thisUser).then(info => setUserInfo(info))
+    }, [])
 
 
-    if(loading) {
-        return (
-            <div>
-                <p>loading...</p>
-            </div>
-        )
-    } return (
+
+    return (
         <>
-            <ProfileHeader userInfo={userInfo} userName={userName} thisUser={thisUser} />
-            {smeetList && smeetList.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} userName={userName} setShowModal={setShowModal} />)}
+            <ProfileHeader userInfo={userInfo} userName={userName} thisUser={thisUser} smeets={smeetList[0]}/>
+            {smeetList && smeetList.map((post) => <Post key={post.id} userInfo={userInfo} smeets={post} userName={userName} setShowModal={setShowModal} socket={socket} user={user} />)}
         </>
     )
 }

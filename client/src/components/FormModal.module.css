@@ -3,19 +3,19 @@
     margin: 0;
 }
 
-.container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
+.modal_container {
     position: absolute;
     left: 0;
     top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     background-color: rgba(140, 171, 201, 0.25);
+    /* background-color: yellow; */
     position: fixed;
-    z-index: 4;
 }
 
 .smeetform_container {
@@ -130,4 +130,23 @@ textarea:focus {
 
 .file {
     display: none;
+}
+
+.imgRemove {
+    position: relative;
+}
+
+.remove {
+    /* width: 15px; */
+    padding: 5px;
+    text-align: center;
+    border-radius: 8px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.editIcon {
+    fill: #777;
+    font-size: 2em;
 }

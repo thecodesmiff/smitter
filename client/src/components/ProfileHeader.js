@@ -12,22 +12,28 @@ import { HiOutlineArrowSmallLeft,
 } from "react-icons/hi2";
 import { useParams, useNavigate } from 'react-router-dom';
 import EditProfile from './EditProfile';
+import getUserInfo from '../functions/GetUserInfo';
 
 
-export default function ProfileHeader({ userInfo, userName, thisUser }) {
+
+export default function ProfileHeader({ thisUser, userInfo, userName}) {
 
 
-    const { username, cover, display_name, avatar, bio, location, website } = userInfo;
     const [smeetTotal, setSmeetTotal] = useState();
+    // const [isUser, setIsUser] = useState(false);
+    // const { smeetUser } = useParams();
+    const [showEdit, setShowEdit] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [isUser, setIsUser] = useState(false);
-    const { smeetUser } = useParams();
-    const [showEdit, setShowEdit] = useState(false)
 
-    console.log('j.cole', userInfo)
+  
+
+
 
     const userCheck = () => {
-        thisUser === userName ? setIsUser(true) : setIsUser(false);
+        userName === thisUser ? setIsUser(true) : setIsUser(false);
     }
+
 
     const navigate = useNavigate();
     const goBack = () => {
@@ -45,32 +51,33 @@ export default function ProfileHeader({ userInfo, userName, thisUser }) {
         }
     };
 
-
+    
     useEffect(() => {
-        getCount();
-        userCheck();
-    });
+        getCount()
+}, []);
+
 
 
     return (
         <>
+        {userInfo &&
             <div className={styles.container}>
                 <div className={styles.profileHeader}>
                     <div className={styles.headerLeft}>
                         <HiOutlineArrowSmallLeft className={styles.backArrow} onClick={goBack} />
                     </div>
                     <div className={styles.headerRight}>
-                        <h4>{display_name}</h4>
+                        {isUser ? <h4>{userInfo.display_name}</h4> :  <h4>{userInfo.display_name}</h4>}
                         <p>{smeetTotal} posts</p>
                     </div>
                 </div>
                 {/* <img src="http://placekitten.com/600/200" alt="" className={styles.headerImg} /> */}
-                <Cover username={thisUser} cover={cover} />
+                <Cover username={thisUser} cover={userInfo.cover} />
                 <div className={styles.profileImg}>
                     <img src={userInfo.avatar} alt="" />
                 </div>
                 <div className={styles.profileDetailsContainer}>
-                    {!isUser ? 
+                    {thisUser !== userName ? 
                     <div className={styles.userProfileMenu}>
                             <HiOutlineEllipsisHorizontal  className={styles.moreButton}/>
                             <HiOutlineEnvelope className={styles.envelope} />
@@ -85,12 +92,12 @@ export default function ProfileHeader({ userInfo, userName, thisUser }) {
                     </div>
                         }  
                     <div className={styles.displayName}>
-                        <h4>{display_name}</h4>
+                        <h4>{userInfo.display_name}</h4>
                         <p>@{thisUser}</p>
                     </div>
                     <div className={styles.profileDetails}>
                         <div className={styles.bio}>
-                            <p>{bio}</p>
+                            <p>{userInfo.bio}</p>
                         </div>
                         <div className={styles.info}>
                             <div className={styles.location}>
@@ -113,6 +120,7 @@ export default function ProfileHeader({ userInfo, userName, thisUser }) {
                     </div>
                 </div>
             </div>
+}
         </>
     )
 }

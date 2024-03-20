@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import styles from '../components/Login.module.css';
+import socket from '../components/Socket';
 
 export default function Auth () {
 
@@ -31,12 +32,16 @@ export default function Auth () {
             })
             const data = await response.json();
 
+            let username = data.username
+
+
+
             if(data.detail) {
                 setError(data.detail);
             } else {
                 setCookie('Email', data.email);
                 setCookie('AuthToken', data.token);
-                setCookie('UserName', data.username)
+                setCookie('UserName', data.username);
 
                 window.location.reload();
             }

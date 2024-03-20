@@ -6,11 +6,10 @@ import { HiOutlineMagnifyingGlass,
     HiOutlineUser,
     HiOutlineEllipsisHorizontal
 } from "react-icons/hi2";
-import SmeetForm from "./SmeetForm";
 import { useCookies } from "react-cookie";
 import { NavLink } from 'react-router-dom';
 import styles from './SideNav.module.css'
-import FormModal from './FormModal';
+import socket from '../components/Socket';
 
 export default function SideNav({ showModal, setShowModal, setSmeetList }) {
 
@@ -18,6 +17,8 @@ export default function SideNav({ showModal, setShowModal, setSmeetList }) {
     const username = cookie.UserName;
     const [userInfo, setUserInfo] = useState();
     const [loading, setLoading] = useState(true);
+    const [notifications, setNotifications] = useState([]);
+    const [open, setOpen] = useState(false);
 
 
     const signOut = () => {
@@ -25,6 +26,8 @@ export default function SideNav({ showModal, setShowModal, setSmeetList }) {
         removeCookie('Email');
         removeCookie('AuthToken');
         removeCookie('UserName');
+
+        socket.disconnect()
 
         window.location.reload();
     }
@@ -42,7 +45,38 @@ export default function SideNav({ showModal, setShowModal, setSmeetList }) {
 
     useEffect(() => {
         getUserInfo();
+        socket.auth = {username}
+        socket.connect();
     }, []);
+
+    useEffect(() => {
+        socket.on("getNotification", (data) => {
+            setNotifications(prev => [...prev, data]);
+        })
+    }, [socket])
+
+    console.log('hilly', notifications)
+
+    const displayNotifications = ({ senderName, type }) => {
+        let action; 
+        switch(type) {
+            case 'like':
+                action = 'liked';
+                return (<span>{`${senderName} ${action} your smeet.`}</span>)
+            case 'comment':
+                action = 'commented';
+                return (<span>{`${senderName} ${action} on your smeet.`}</span>)
+            default:
+                action = 'none';
+        }
+        
+    }
+
+    const handleRead = () => {
+        !open ? setOpen(true) : setOpen(false);
+        setNotifications([]);
+    }
+
 
     if(loading) {
         return (
@@ -53,7 +87,7 @@ export default function SideNav({ showModal, setShowModal, setSmeetList }) {
     }
     return (
         <>
-             {showModal && <FormModal setShowModal={setShowModal} setSmeetList={setSmeetList} />}
+             {/* {showModal && <FormModal setShowModal={setShowModal} setSmeetList={setSmeetList} />} */}
             <div className={styles.nav}>
                 <div className="logo">X</div>
                     <NavLink to='/'>
@@ -67,14 +101,17 @@ export default function SideNav({ showModal, setShowModal, setSmeetList }) {
                     <span>Explore</span>
                 </div>
                 <div className={styles.menuItems}>
-                    <HiOutlineBell className={styles.icon} />
+                    <div className={styles.notifications}>
+                        <HiOutlineBell className={styles.icon} onClick={() => handleRead()} />
+                        {notifications.length > 0 && <div className={styles.notificationCount}>{notifications.length}</div>}
+                    </div>
                     <span>Notifications</span>
                 </div>
                 <div className={styles.menuItems}>
                     <HiOutlineEnvelope className={styles.icon} />
                     <span>Messages</span>
                 </div>
-                    <NavLink to={`/${cookie.UserName}`}>
+                    <NavLink to={`/${cookie.UserName}`} reloadDocument >
                 <div className={styles.menuItems}>
                         <HiOutlineUser className={styles.icon} />
                         <span>Profile</span>    
@@ -97,6 +134,11 @@ export default function SideNav({ showModal, setShowModal, setSmeetList }) {
                             <div><HiOutlineEllipsisHorizontal/></div>
                     </div>
                 </div>
+                {open &&
+                    <div>
+                        {notifications.map((n) => displayNotifications(n))}
+                    </div>
+                }
             </div>
             </>
     )
