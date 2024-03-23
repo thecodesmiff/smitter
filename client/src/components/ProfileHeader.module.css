@@ -5,8 +5,11 @@
 
 .profileHeader {
     display: flex;
+    justify-content: space;
     align-items: center;
     padding: 5px;
+    border: 1px solid #333;
+    border-top: 0;
 }
 
 .headerLeft {
@@ -86,6 +89,8 @@
 
 .profileDetailsContainer {
     padding: 0 15px;
+    border: 1px solid #333;
+    border-top: 0;
 }
 
 .displayName {

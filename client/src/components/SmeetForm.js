@@ -15,7 +15,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function SmeetForm({ setShowModal }) {
+export default function SmeetForm({ setShowModal, type, smeet }) {
 
     const [smeetText, setSmeetText] = useState("");
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -24,7 +24,7 @@ export default function SmeetForm({ setShowModal }) {
     const [cookie, setCookie, removeCookie] = useCookies(null);
     const [images, setImages] = useState();
     const [gifs, setGifs] = useState();
-    const username = cookie.UserName;
+    const userName = cookie.UserName;
 
     const navigate = useNavigate();
     const refreshPage = () => {
@@ -38,7 +38,7 @@ export default function SmeetForm({ setShowModal }) {
         const info = {
             content: smeetText,
             date: date,
-            username: username,
+            username: userName,
             image: images,
             gif: gifs
         }
@@ -111,6 +111,7 @@ export default function SmeetForm({ setShowModal }) {
                 <div className={styles.smeetform_container}>
                     {/* <span onClick={() => setShowModal(false)}>X</span> */}
                     <div className={styles.smeetform_top}>
+                    {type === 'Post' && smeetText.length > 0 ? <p className={styles.info}>Replying to <span className={styles.username}>@{smeet.username}</span></p> : ''}
                         <form id="smeet" onSubmit={handleSubmission}>
                             <textarea 
                                 // name="smeetContent" 

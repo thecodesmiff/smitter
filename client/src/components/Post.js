@@ -10,21 +10,22 @@ import { HiOutlineChatBubbleOvalLeft,
          HiOutlineTrash
 } from "react-icons/hi2";
 import PostOptions from './PostOptions';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import EditSmeet from './EditSmeet';
 import GetLikes from '../functions/GetLikes';
 import socket from '../components/Socket';
+import { useCookies } from 'react-cookie';
 
-export default function Post({ userName, smeets, user }) {
+export default function Post({ smeets, user, type }) {
 
     const {id, smeet, date, tweetimg, username, tweetgif, display_name, avatar} = smeets;
-    // const {cover, bio, location, website } = userInfo;
     const [showOption, setShowOption] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
-    // const [likedByUser, setLikedByUser] = useState(false);
-    // const [liked, setLiked] = useState(false);
-    // const initialCount = 0;
+    const [cookie, setCookie] = useCookies();
+
+    const userName = cookie.UserName;
+
 
     const toggleOption = () => {
         !showOption ? setShowOption(true) : setShowOption(false);
@@ -34,6 +35,8 @@ export default function Post({ userName, smeets, user }) {
     const refreshPage = () => {
         navigate(0);
     }
+
+    const smeetId = useLocation().pathname.split('/')[3];
 
     const handleAction = async (type) => {
         // const data = {
@@ -61,12 +64,16 @@ export default function Post({ userName, smeets, user }) {
         })
     }
 
+    // const goSmeet = () => {
+    //     navigate(`http://localhost/smeet/${username}/${id}`);
+    // }
 
 
     useEffect(() => {
-        GetLikes(id).then(count => setLikeCount(count.count));
+        GetLikes(type === 'Post' ? smeetId : id).then(count => setLikeCount(count.count));
     }, [])
 
+    console.log('this is:', userName)
 
     return (
         <>
@@ -92,17 +99,20 @@ export default function Post({ userName, smeets, user }) {
                             {showOption && <PostOptions setShowOption={setShowOption} smeetId={id} /> }
                         </div>
                     </div>
+                <Link to={`/smeet/${username}/${id}`}>
                     <div className={styles.postBody}>
                         <p>{smeet}</p>
                     </div>
+                    <div className={styles.media} >
                     {tweetimg && <div>
                         <img src={tweetimg} alt="" />
                     </div>}
                     {tweetgif && <div>
                         <img src={tweetgif} alt="" />
                     </div>}
+                    </div>
+                </Link>
                     <div className={styles.postFooter}>
-
                         <div className={styles.interactionContainer}>
                             <HiOutlineChatBubbleOvalLeft  className={`${styles.icon} ${styles.chatBubble}`} onClick={() => handleAction('comment')} />
                             <p>0</p>    

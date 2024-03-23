@@ -1,0 +1,24 @@
+.profileHeader {
+    display: flex;
+    justify-content: space;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.headerLeft {
+    padding: 0 20px 0 8px;
+    font-size: 1em;
+}
+
+.headerRight {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.headerRight p {
+    font-size: 0.7em;
+    color: #999;
+    
+}

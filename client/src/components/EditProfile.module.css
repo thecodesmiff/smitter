@@ -63,6 +63,11 @@
     object-fit: cover;
 }
 
+.headerImg {
+    width: 100px;
+    height: 100px;
+}
+
 .editContainer {
     /* border: 1px solid red; */
     background-color: #000;
@@ -90,8 +95,31 @@
     display: block;
     padding: 10px;
     background-color: black;
-    border: 1px solid #333;
+    /* border: 1px solid #333; */
     font-size: .9em;
+    color: #fff;
+    border: none;
+}
+
+.profileForm input:focus, .profileForm textarea:focus {
+    outline: none;
+}
+
+
+.billy {
+    border: 1px solid #333;
+    padding: 5px;
+}
+
+
+.billy p {
+    margin-left: 8px;
+    font-size: .8em;
+}
+
+.fieldInfo {
+    display: flex;
+    justify-content: space-between;
 }
 
 

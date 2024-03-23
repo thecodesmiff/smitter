@@ -8,6 +8,7 @@
     width: 500px;
     border-radius: 10px;
     overflow: indent;
+    color: #000;
     box-shadow: rgba(0,0,0, 0.05) 0 6px 24px, rgba(0,0,0, 0.08) 0 0 0 1px;
 }
 
@@ -16,6 +17,10 @@
     flex-direction: column;
     height: 350px;
     padding: 20px;
+}
+
+input {
+    color: #000;
 }
 
 .auth_options {

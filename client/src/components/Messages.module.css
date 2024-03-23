@@ -1,0 +1,92 @@
+.container {
+    width: 295px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    margin-right: 8px;
+    border-radius: 15px 15px 0px 0px;
+    box-shadow: 0px -1px 5px 1px #555;
+}
+
+
+
+.profileHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 10px;
+    background-color: rgba(0,0,0, 0.5);
+    backdrop-filter: blur(5px);
+    position: sticky;
+    top: 0;
+    border-radius: 15px 15px 0px 0px;
+}
+
+
+.left {
+    display: flex;
+}
+
+.headerLeft {
+    padding: 0 20px 0 8px;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+}
+
+.headerRight {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.headerRight p {
+    font-size: 0.7em;
+    color: #999;
+    
+}
+
+.action {
+    font-size: 1.3em;
+    display: flex;
+    align-self: center;
+    /* border: 1px solid red; */
+}
+
+.messages{
+    height: 100vh;
+    display: flex;
+    padding: 15px;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.rightText {
+    background-color: blue;
+    padding: 35px;
+    align-self: flex-end;
+    margin-bottom: 15px;
+}
+
+.leftText {
+    background-color: green;
+    padding: 35px;
+    align-self: flex-start;
+    margin-bottom: 15px;
+}
+
+.false {
+    transform:translateY(365px);
+    transition: all .3s;
+}
+
+.true {
+    transform: translateY(10px);
+    transition: all .3s;
+}
+
+.hidden {
+    display: none;
+}

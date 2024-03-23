@@ -1,0 +1,15 @@
+.billy {
+    padding: 3px;
+    border: 2px solid blue;
+}
+
+input {
+    border: none;
+    box-shadow: none;
+    width: 100%;
+}
+
+input:focus {
+    outline: none;
+
+}

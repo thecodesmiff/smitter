@@ -6,6 +6,7 @@ import ProfileHeader from "../components/ProfileHeader";
 import Profile from "./Profile";
 import { Outlet } from "react-router-dom";
 import FormModal from '../components/FormModal';
+import Message from "../components/Message";
 
 
 
@@ -56,7 +57,7 @@ export default function Main({ showModal, setShowModal, setSmeetList }) {
                 </div>
                 <div className="trendContainer">
                     <div className="trends">
-                        <p>This is just a thing</p>
+                        <Message />
                     </div>
                 </div>
                 {showModal && <FormModal setShowModal={setShowModal} setSmeetList={setSmeetList}  />}

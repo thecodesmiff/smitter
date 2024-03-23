@@ -12,6 +12,7 @@ import PostList from './components/PostList';
 import { useState, useEffect } from 'react';
 import EditProfile from './components/EditProfile';
 import EditSmeet from './components/EditSmeet';
+import PostPage from './components/PostPage';
 
 function App() {
   const [cookie] = useCookies(null);
@@ -29,6 +30,7 @@ function App() {
         <Route path='/:username' element={<Profile userSmeets={userSmeets} setUserSmeets={setUserSmeets} user={user} />} />
         <Route path='/settings/profile' element={<EditProfile/>} />
         <Route path='/smeet/edit/:id' element={<EditSmeet />} />
+        <Route path='/smeet/:username/:id' element={<PostPage />} />
       </Route>
     ))
 

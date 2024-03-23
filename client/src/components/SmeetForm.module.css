@@ -5,13 +5,22 @@
 
 .smeetform_container {
     width: 100%;
-    margin-top: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 10px;
     background-color: black;
     border: 1px solid #333;
+}
+
+.info {
+    font-size: 0.8em;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.username {
+    color: #1D99EC;
 }
 
 .smeetform_container > span {

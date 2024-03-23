@@ -1,4 +1,5 @@
 .container {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,11 +12,11 @@
     grid-template-columns: auto 5fr;
     grid-template-rows: repeat(4, fit-content(2fr));
     border: 1px solid #333;
+    border-top: 0;
     position: relative;
 }
 
 .avatar {
-    /* background-color: green; */
     grid-column-start: 1;
     grid-column-end: 1;
     grid-row-start: 1;
@@ -43,18 +44,13 @@
     display: flex;
     justify-self: left;
     justify-content: space-between;
-    width: 95%;
-    /* border: 1px solid red; */
-    /* grid-column-start: 2; */
-    /*grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: span 2; */
+    width: 100%;
 }
 
 .postHeaderContainer {
     font-size: .8em;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 
 
@@ -70,21 +66,20 @@
 
 .postBody {
     padding: 5px;
-    grid-column-start: 2;
     font-size: .8em;
     margin-bottom: 5px;
-    /*grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: span 3; */
 }
 
+/* .media {
+    border: 1px solid gold;
+} */
+
 .postFooter {
-    grid-column-start: 2;
+
     padding: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* grid-column-end: 3; */
 }
 
 .icon {
@@ -111,7 +106,8 @@
 
 img {
     height: 85%;
-    width: 85%;
+    width: 100%;
+    text-align: center;
 }
 
 .hide {
@@ -127,4 +123,9 @@ img {
     font-size: 0.8em;
     margin-left: 5px;
     color: #999;
+}
+
+a {
+    text-decoration: dotted;
+    width: 100%;
 }
